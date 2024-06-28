@@ -1,0 +1,25 @@
+name: Trigger dispatch-b's package update
+
+on:
+    workflow_run:
+        workflows:
+          - Pull Request workflow
+        types:
+          - completed
+
+jobs:
+    trigger-dispatch-b:
+        if: github.event.workflow_run.conclusion == 'success'
+        runs-on: ubuntu-latest
+        steps:
+        - name: Trigger dispatch-b's receiver.yml workflow
+          uses: actions/github-script@v6
+          with:
+            github-token: ${{ secrets.TRIGGER_DISPATCH_B }}
+            script: |
+              await github.rest.actions.createWorkflowDispatch({
+                  owner: 'scaramallion',
+                  repo: 'dispatch-b',
+                  workflow_id: 'receiver.yml',
+                  ref: 'main',
+              })
