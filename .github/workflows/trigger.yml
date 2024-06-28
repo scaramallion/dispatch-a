@@ -3,7 +3,7 @@ name: Trigger dispatch-b's package update
 on:
     workflow_run:
         workflows:
-          - Pull Request workflow
+          - 'Pull Request workflow'
         types:
           - completed
 
