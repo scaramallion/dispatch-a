@@ -10,13 +10,14 @@ jobs:
         if: github.event.workflow_run.conclusion == 'success'
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/github-script@v6
-        with:
+        - name: Trigger dispatch-b's receiver.yml workflow
+          uses: actions/github-script@v6
+          with:
             github-token: ${{ secrets.TRIGGER_DISPATCH_B }}
             script: |
-            await github.rest.actions.createworkflowDispatch({
-                owner: 'scaramallion',
-                repo: 'dispatch-b',
-                workflow_id: 'receiver',
-                ref: 'main',
-            })
+              await github.rest.actions.createWorkflowDispatch({
+                  owner: 'scaramallion',
+                  repo: 'dispatch-b',
+                  workflow_id: 'receiver.yml',
+                  ref: 'main',
+              })
