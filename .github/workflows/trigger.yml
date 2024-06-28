@@ -2,8 +2,10 @@ name: Trigger dispatch-b's package update
 
 on:
     workflow_run:
-        workflows: [pr]
-        types: [completed]
+        workflows:
+          - Pull Request workflow
+        types:
+          - completed
 
 jobs:
     trigger-dispatch-b:
